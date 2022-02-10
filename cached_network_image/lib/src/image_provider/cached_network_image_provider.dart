@@ -26,6 +26,7 @@ class CachedNetworkImageProvider
   /// When the image fails to load [errorListener] is called.
   const CachedNetworkImageProvider(
     this.url, {
+    this.enableCompress = false,
     this.maxHeight,
     this.maxWidth,
     this.scale = 1.0,
@@ -35,6 +36,9 @@ class CachedNetworkImageProvider
     this.cacheKey,
     this.imageRenderMethodForWeb = ImageRenderMethodForWeb.HtmlImage,
   });
+
+  /// Callback function to compress an image.
+  final bool enableCompress;
 
   /// CacheManager from which the image files are loaded.
   final BaseCacheManager? cacheManager;
@@ -97,6 +101,7 @@ class CachedNetworkImageProvider
     assert(key == this);
     return ImageLoader().loadAsync(
       url,
+      enableCompress,
       cacheKey,
       chunkEvents,
       decode,

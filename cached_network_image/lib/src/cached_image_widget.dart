@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -60,6 +59,9 @@ class CachedNetworkImage extends StatelessWidget {
     await cacheManager.removeFile(cacheKey ?? url);
     return CachedNetworkImageProvider(url, scale: scale).evict();
   }
+
+  /// Callback function to compress an image.
+  final bool enableCompress;
 
   final CachedNetworkImageProvider _image;
 
@@ -209,6 +211,7 @@ class CachedNetworkImage extends StatelessWidget {
   CachedNetworkImage({
     Key? key,
     required this.imageUrl,
+    this.enableCompress = false,
     this.httpHeaders,
     this.imageBuilder,
     this.placeholder,

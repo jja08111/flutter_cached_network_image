@@ -4,13 +4,23 @@ description: Flutter library to load and cache network images.
 homepage: https://github.com/Baseflow/flutter_cached_network_image
 version: 3.2.0
 
+publish_to: none
+
 dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.3.0
   octo_image: ^1.0.0
-  cached_network_image_platform_interface: ^1.0.0
-  cached_network_image_web: ^1.0.0
+  cached_network_image_platform_interface:
+    git:
+      url: https://github.com/jja08111/flutter_cached_network_image.git
+      path: cached_network_image_platform_interface
+      ref: what-should-i-eat
+  cached_network_image_web:
+    git:
+      url: https://github.com/jja08111/flutter_cached_network_image.git
+      path: cached_network_image_web
+      ref: what-should-i-eat
 
 
 dev_dependencies:

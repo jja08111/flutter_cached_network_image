@@ -17,6 +17,7 @@ class ImageLoader implements platform.ImageLoader {
   @override
   Stream<ui.Codec> loadAsync(
     String url,
+    bool enableCompress,
     String? cacheKey,
     StreamController<ImageChunkEvent> chunkEvents,
     DecoderCallback decode,

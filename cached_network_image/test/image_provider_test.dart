@@ -7,7 +7,6 @@ import 'dart:math' as math;
 import 'dart:ui' show Codec, FrameInfo;
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
