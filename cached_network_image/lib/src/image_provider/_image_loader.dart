@@ -56,22 +56,13 @@ class ImageLoader implements platform.ImageLoader {
           ));
         }
         if (result is FileInfo) {
-          var file = result.file;
-          bool didYield = false;
+          final file = result.file;
+          var bytes = await file.readAsBytes();
 
           if (enableCompress) {
-            final compressedFile =
-                await FlutterImageCompress.compressWithFile(file.path);
-            if (compressedFile != null) {
-              yield await decode(compressedFile);
-              didYield = true;
-            }
+            bytes = await FlutterImageCompress.compressWithList(bytes);
           }
-          if (!didYield) {
-            var bytes = await file.readAsBytes();
-            var decoded = await decode(bytes);
-            yield decoded;
-          }
+          yield await decode(bytes);
         }
       }
     } catch (e) {
