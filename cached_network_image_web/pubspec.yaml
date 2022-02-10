@@ -3,6 +3,8 @@ description: Web implementation of CachedNetworkImage
 version: 1.0.1
 homepage: https://github.com/Baseflow/flutter_cached_network_image
 
+publish_to: none
+
 environment:
   sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
@@ -11,7 +13,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.0.0
-  cached_network_image_platform_interface: ^1.0.0
+  cached_network_image_platform_interface:
+    git:
+      url: https://github.com/jja08111/flutter_cached_network_image.git
+      path: cached_network_image_platform_interface
+      ref: what-should-i-eat
+  flutter_image_compress: ^1.1.0
 
 dev_dependencies:
   flutter_test:
