@@ -57,10 +57,10 @@ class ImageLoader implements platform.ImageLoader {
         }
         if (result is FileInfo) {
           final file = result.file;
-          final fileKBSize = file.lengthSync() / 1000;
+          final fileKBSize = file.lengthSync() / 1024;
           var bytes = await file.readAsBytes();
 
-          if (enableCompress && fileKBSize > 200) {
+          if (enableCompress && fileKBSize > 800) {
             bytes = await FlutterImageCompress.compressWithList(
               bytes,
               quality: 50,
