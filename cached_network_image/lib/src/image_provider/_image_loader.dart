@@ -60,7 +60,10 @@ class ImageLoader implements platform.ImageLoader {
           var bytes = await file.readAsBytes();
 
           if (enableCompress) {
-            bytes = await FlutterImageCompress.compressWithList(bytes);
+            bytes = await FlutterImageCompress.compressWithList(
+              bytes,
+              quality: 25,
+            );
           }
           yield await decode(bytes);
         }
