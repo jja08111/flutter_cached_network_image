@@ -11,12 +11,14 @@ import 'package:cached_network_image_platform_interface'
     show ImageRenderMethodForWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 /// ImageLoader class to load images on the web platform.
 class ImageLoader implements platform.ImageLoader {
   @override
   Stream<ui.Codec> loadAsync(
     String url,
+    bool enableCompress,
     String? cacheKey,
     StreamController<ImageChunkEvent> chunkEvents,
     DecoderCallback decode,
@@ -32,6 +34,7 @@ class ImageLoader implements platform.ImageLoader {
       case ImageRenderMethodForWeb.HttpGet:
         return _loadAsyncHttpGet(
           url,
+          enableCompress,
           cacheKey,
           chunkEvents,
           decode,
@@ -49,6 +52,7 @@ class ImageLoader implements platform.ImageLoader {
 
   Stream<ui.Codec> _loadAsyncHttpGet(
     String url,
+    bool enableCompress,
     String? cacheKey,
     StreamController<ImageChunkEvent> chunkEvents,
     DecoderCallback decode,
@@ -69,10 +73,22 @@ class ImageLoader implements platform.ImageLoader {
           ));
         }
         if (result is FileInfo) {
-          var file = result.file;
-          var bytes = await file.readAsBytes();
-          var decoded = await decode(bytes);
-          yield decoded;
+          final file = result.file;
+          bool didYield = false;
+
+          if (enableCompress) {
+            final compressedFile =
+                await FlutterImageCompress.compressWithFile(file.path);
+            if (compressedFile != null) {
+              yield await decode(compressedFile);
+              didYield = true;
+            }
+          }
+          if (!didYield) {
+            var bytes = await file.readAsBytes();
+            var decoded = await decode(bytes);
+            yield decoded;
+          }
         }
       }
     } catch (e) {
