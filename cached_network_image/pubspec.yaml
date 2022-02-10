@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   flutter_cache_manager: ^3.3.0
   octo_image: ^1.0.0
+  flutter_image_compress: ^1.1.0
   cached_network_image_platform_interface:
     git:
       url: https://github.com/jja08111/flutter_cached_network_image.git

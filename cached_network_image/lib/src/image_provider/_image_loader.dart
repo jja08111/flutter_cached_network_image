@@ -11,6 +11,7 @@ import 'package:cached_network_image_platform_interface'
 import 'package:cached_network_image_platform_interface'
         '/cached_network_image_platform_interface.dart'
     show ImageRenderMethodForWeb;
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 /// ImageLoader class to load images on IO platforms.
 class ImageLoader implements platform.ImageLoader {
@@ -56,9 +57,21 @@ class ImageLoader implements platform.ImageLoader {
         }
         if (result is FileInfo) {
           var file = result.file;
-          var bytes = await file.readAsBytes();
-          var decoded = await decode(bytes);
-          yield decoded;
+          bool didYield = false;
+
+          if (enableCompress) {
+            final compressedFile =
+                await FlutterImageCompress.compressWithFile(file.path);
+            if (compressedFile != null) {
+              yield await decode(compressedFile);
+              didYield = true;
+            }
+          }
+          if (!didYield) {
+            var bytes = await file.readAsBytes();
+            var decoded = await decode(bytes);
+            yield decoded;
+          }
         }
       }
     } catch (e) {
