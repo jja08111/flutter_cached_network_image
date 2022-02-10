@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:cached_network_image_platform_interface'
-        '/cached_network_image_platform_interface.dart' as platform
+    '/cached_network_image_platform_interface.dart' as platform
     show ImageLoader;
 import 'package:cached_network_image_platform_interface'
-        '/cached_network_image_platform_interface.dart'
+    '/cached_network_image_platform_interface.dart'
     show ImageRenderMethodForWeb;
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 
@@ -17,36 +17,36 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 class ImageLoader implements platform.ImageLoader {
   @override
   Stream<ui.Codec> loadAsync(
-    String url,
-    bool enableCompress,
-    String? cacheKey,
-    StreamController<ImageChunkEvent> chunkEvents,
-    DecoderCallback decode,
-    BaseCacheManager cacheManager,
-    int? maxHeight,
-    int? maxWidth,
-    Map<String, String>? headers,
-    Function()? errorListener,
-    ImageRenderMethodForWeb imageRenderMethodForWeb,
-    Function() evictImage,
-  ) async* {
+      String url,
+      bool enableCompress,
+      String? cacheKey,
+      StreamController<ImageChunkEvent> chunkEvents,
+      DecoderCallback decode,
+      BaseCacheManager cacheManager,
+      int? maxHeight,
+      int? maxWidth,
+      Map<String, String>? headers,
+      Function()? errorListener,
+      ImageRenderMethodForWeb imageRenderMethodForWeb,
+      Function() evictImage,
+      ) async* {
     try {
       assert(
-          cacheManager is ImageCacheManager ||
-              (maxWidth == null && maxHeight == null),
-          'To resize the image with a CacheManager the '
+      cacheManager is ImageCacheManager ||
+          (maxWidth == null && maxHeight == null),
+      'To resize the image with a CacheManager the '
           'CacheManager needs to be an ImageCacheManager. maxWidth and '
           'maxHeight will be ignored when a normal CacheManager is used.');
 
       var stream = cacheManager is ImageCacheManager
           ? cacheManager.getImageFile(url,
-              maxHeight: maxHeight,
-              maxWidth: maxWidth,
-              withProgress: true,
-              headers: headers,
-              key: cacheKey)
+          maxHeight: maxHeight,
+          maxWidth: maxWidth,
+          withProgress: true,
+          headers: headers,
+          key: cacheKey)
           : cacheManager.getFileStream(url,
-              withProgress: true, headers: headers, key: cacheKey);
+          withProgress: true, headers: headers, key: cacheKey);
 
       await for (var result in stream) {
         if (result is DownloadProgress) {
@@ -63,6 +63,8 @@ class ImageLoader implements platform.ImageLoader {
             bytes = await FlutterImageCompress.compressWithList(
               bytes,
               quality: 25,
+              minWidth: 320,
+              minHeight: 240,
             );
           }
           yield await decode(bytes);
