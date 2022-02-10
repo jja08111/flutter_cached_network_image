@@ -18,6 +18,7 @@ void main() {
           () => imageLoader.loadAsync(
               'test.com/image',
               null,
+              null,
               StreamController<ImageChunkEvent>(),
               decoder,
               MockCacheManager(),

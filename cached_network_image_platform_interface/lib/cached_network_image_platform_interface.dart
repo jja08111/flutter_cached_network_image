@@ -2,6 +2,7 @@ library cached_network_image_platform_interface;
 
 import 'dart:async';
 import 'dart:ui' as ui;
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -23,6 +24,7 @@ class ImageLoader {
   /// Stream gives the option to show multiple images after each other.
   Stream<ui.Codec> loadAsync(
     String url,
+    Future<File> Function(File)? compressCallback,
     String? cacheKey,
     StreamController<ImageChunkEvent> chunkEvents,
     DecoderCallback decode,
