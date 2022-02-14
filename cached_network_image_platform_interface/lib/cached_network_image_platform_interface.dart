@@ -19,7 +19,7 @@ enum ImageRenderMethodForWeb {
 }
 
 ///
-typedef ImageDownloadCallBack = Uint8List Function(Uint8List);
+typedef ImageDownloadCallBack = FutureOr<Uint8List> Function(Uint8List);
 
 /// ImageLoader class to load images differently on various platforms.
 class ImageLoader {
