@@ -1,6 +1,7 @@
 library cached_network_image_platform_interface;
 
 import 'dart:async';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -17,12 +18,16 @@ enum ImageRenderMethodForWeb {
   HttpGet, // ignore: constant_identifier_names
 }
 
+///
+typedef ImageDownloadCallBack = Uint8List Function(Uint8List);
+
 /// ImageLoader class to load images differently on various platforms.
 class ImageLoader {
   /// loads the images async and gives the resulted codecs on a Stream. The
   /// Stream gives the option to show multiple images after each other.
   Stream<ui.Codec> loadAsync(
     String url,
+    ImageDownloadCallBack onImageDownloaded,
     bool enableCompress,
     String? cacheKey,
     StreamController<ImageChunkEvent> chunkEvents,

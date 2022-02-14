@@ -17,6 +17,7 @@ void main() {
       expect(
           () => imageLoader.loadAsync(
               'test.com/image',
+              (_) => _,
               false,
               null,
               StreamController<ImageChunkEvent>(),
