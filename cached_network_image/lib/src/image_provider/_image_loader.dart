@@ -67,7 +67,7 @@ class ImageLoader implements platform.ImageLoader {
             );
             await file.writeAsBytes(bytes);
           }
-          bytes = onImageDownloaded(bytes);
+          bytes = await onImageDownloaded(bytes);
           yield await decode(bytes);
         }
       }
