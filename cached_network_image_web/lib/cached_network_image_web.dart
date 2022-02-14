@@ -8,7 +8,7 @@ import 'package:cached_network_image_platform_interface'
     show ImageLoader;
 import 'package:cached_network_image_platform_interface'
         '/cached_network_image_platform_interface.dart'
-    show ImageRenderMethodForWeb;
+    show ImageDownloadCallBack, ImageRenderMethodForWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -18,6 +18,7 @@ class ImageLoader implements platform.ImageLoader {
   @override
   Stream<ui.Codec> loadAsync(
     String url,
+    ImageDownloadCallBack onImageDownloaded,
     bool enableCompress,
     String? cacheKey,
     StreamController<ImageChunkEvent> chunkEvents,

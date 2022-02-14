@@ -17,7 +17,7 @@ dependencies:
     git:
       url: https://github.com/jja08111/flutter_cached_network_image.git
       path: cached_network_image_platform_interface
-      ref: what-should-i-eat
+      ref: app/ai
   flutter_image_compress: ^1.1.0
 
 dev_dependencies:
