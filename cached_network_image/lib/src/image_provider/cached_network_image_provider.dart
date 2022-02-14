@@ -2,7 +2,7 @@ import 'dart:async' show Future, StreamController;
 import 'dart:ui' as ui show Codec;
 
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart'
-    show ImageRenderMethodForWeb;
+    show ImageDownloadCallBack, ImageRenderMethodForWeb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -27,6 +27,7 @@ class CachedNetworkImageProvider
   const CachedNetworkImageProvider(
     this.url, {
     this.enableCompress = false,
+    required this.onImageDownloaded,
     this.maxHeight,
     this.maxWidth,
     this.scale = 1.0,
@@ -39,6 +40,9 @@ class CachedNetworkImageProvider
 
   /// Callback function to compress an image.
   final bool enableCompress;
+
+  ///
+  final ImageDownloadCallBack onImageDownloaded;
 
   /// CacheManager from which the image files are loaded.
   final BaseCacheManager? cacheManager;
@@ -101,6 +105,7 @@ class CachedNetworkImageProvider
     assert(key == this);
     return ImageLoader().loadAsync(
       url,
+      onImageDownloaded,
       enableCompress,
       cacheKey,
       chunkEvents,

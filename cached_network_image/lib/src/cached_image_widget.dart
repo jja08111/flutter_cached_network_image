@@ -54,14 +54,22 @@ class CachedNetworkImage extends StatelessWidget {
     String? cacheKey,
     BaseCacheManager? cacheManager,
     double scale = 1.0,
+    required ImageDownloadCallBack onImageDownloaded,
   }) async {
     cacheManager = cacheManager ?? DefaultCacheManager();
     await cacheManager.removeFile(cacheKey ?? url);
-    return CachedNetworkImageProvider(url, scale: scale).evict();
+    return CachedNetworkImageProvider(
+      url,
+      scale: scale,
+      onImageDownloaded: onImageDownloaded,
+    ).evict();
   }
 
   /// Callback function to compress an image.
   final bool enableCompress;
+
+  ///
+  final ImageDownloadCallBack onImageDownloaded;
 
   final CachedNetworkImageProvider _image;
 
@@ -211,6 +219,7 @@ class CachedNetworkImage extends StatelessWidget {
   CachedNetworkImage({
     Key? key,
     required this.imageUrl,
+    required this.onImageDownloaded,
     this.enableCompress = false,
     this.httpHeaders,
     this.imageBuilder,
@@ -242,6 +251,7 @@ class CachedNetworkImage extends StatelessWidget {
         ImageRenderMethodForWeb.HtmlImage,
   })  : _image = CachedNetworkImageProvider(
           imageUrl,
+          onImageDownloaded: onImageDownloaded,
           enableCompress: enableCompress,
           headers: httpHeaders,
           cacheManager: cacheManager,

@@ -16,12 +16,12 @@ dependencies:
     git:
       url: https://github.com/jja08111/flutter_cached_network_image.git
       path: cached_network_image_platform_interface
-      ref: what-should-i-eat
+      ref: app/ai
   cached_network_image_web:
     git:
       url: https://github.com/jja08111/flutter_cached_network_image.git
       path: cached_network_image_web
-      ref: what-should-i-eat
+      ref: app/ai
 
 
 dev_dependencies:
